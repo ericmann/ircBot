@@ -5,6 +5,11 @@
  * Created on: 12/14/12
  * Time: 12:48 AM
  */
+
+// require our singletons for plugins and the database stuff
+require_once( __DIR__ . '/class-database.php' );
+require_once( __DIR__ . '/class-pluginManager.php' );
+
 class ircBot{
 
 	private static $_instance = false;
@@ -19,6 +24,10 @@ class ircBot{
 	public function __construct(){
 		// tell PHP to ignore timing this script out
 		set_time_limit( 0 );
+
+		// we should load in the database here so that all plugins have access to it
+
+		// after the database is loaded, load all plugins so that we can begin our callbacks, etc.
 	}
 
 	public function __destruct(){
@@ -45,7 +54,7 @@ class ircBot{
 		self::_login();
 		self::_joinChannels();
 
-		// listen for any commands now until this script is closed
+		// listen for any commands now until this script is closed manually through kill command or user interaction
 		while( 1 ){
 			self::_listen();
 		}
@@ -92,11 +101,12 @@ class ircBot{
 		if( preg_match( '/\sPART\s#(.*)\s:/i', $data, $channel ) ){
 			$channel = $channel[ 1 ];
 			$data = array(
-				'type' => 'part',
 				'username' => $username,
 				'channel' => $channel,
 				'time' => time()
 			);
+
+			pluginManager::doAction( 'user-part', $data );
 		}
 		return false;
 	}
@@ -106,11 +116,12 @@ class ircBot{
 			$channel = $channel[ 1 ];
 
 			$data = array(
-				'type' => 'join',
 				'username' => $username,
 				'channel' => $channel,
 				'time' => time()
 			);
+
+			pluginManager::doAction( 'user-join', $data );
 
 			return true;
 		}
@@ -154,12 +165,16 @@ class ircBot{
 
 			// now we need to pass this data to the callback functions that need it
 			$data = array(
-				'type' => ( $privateMessage ) ? 'private-message' : 'channel-message',
 				'username' => $username,
 				'channel' => $channel,
 				'message' => $message,
 				'time' => time()
 			);
+
+			if( $privateMessage )
+				pluginManager::doAction( 'private-message', $data );
+			else
+				pluginManager::doAction( 'channel-message', $data );
 
 			return true;
 		}
