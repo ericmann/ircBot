@@ -7,7 +7,7 @@
  */
 
 // require our singletons for plugins and the database stuff
-require_once( __DIR__ . '/class-config.php' );
+require_once( __DIR__ . '/class-config-sample.php' );
 require_once( __DIR__ . '/class-database.php' );
 require_once( __DIR__ . '/class-pluginManager.php' );
 
