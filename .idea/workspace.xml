@@ -48,6 +48,7 @@
         <option value="$PROJECT_DIR$/classes/class-pluginManager.php" />
         <option value="$PROJECT_DIR$/classes/class-config.php" />
         <option value="$PROJECT_DIR$/classes/class-database.php" />
+        <option value="$PROJECT_DIR$/classes/class-config-sample.php" />
       </list>
     </option>
   </component>
@@ -282,6 +283,13 @@
           <folding>
             <element signature="e#6#115#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/classes/class-config-sample.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="39" selection-start="530" selection-end="530" vertical-scroll-proportion="0.4903226">
+          <folding />
         </state>
       </provider>
     </entry>
