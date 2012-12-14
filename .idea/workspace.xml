@@ -20,10 +20,10 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="class-config.php" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/classes/class-config.php">
+      <file leaf-file-name=".gitignore" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="54" selection-start="181" selection-end="181" vertical-scroll-proportion="0.23225807">
+            <state line="1" column="25" selection-start="31" selection-end="31" vertical-scroll-proportion="0.024806201">
               <folding />
             </state>
           </provider>
@@ -49,6 +49,7 @@
         <option value="$PROJECT_DIR$/classes/class-config.php" />
         <option value="$PROJECT_DIR$/classes/class-database.php" />
         <option value="$PROJECT_DIR$/classes/class-config-sample.php" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -296,6 +297,13 @@
     <entry file="file://$PROJECT_DIR$/classes/class-config.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="9" column="54" selection-start="181" selection-end="181" vertical-scroll-proportion="0.23225807">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="25" selection-start="31" selection-end="31" vertical-scroll-proportion="0.024806201">
           <folding />
         </state>
       </provider>
