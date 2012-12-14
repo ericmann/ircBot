@@ -1,6 +1,8 @@
 ircBot
 ======
 
+An open-source IRC bot written in PHP. Handles plugins, database support and cron-based tasks.
+
 Contributing
 ------------
 
