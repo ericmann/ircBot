@@ -20,6 +20,9 @@ class ircBot{
 	public function __construct(){
 		// setup PHP settings for not expiring this script
 		set_time_limit( 0 );
+
+		// load all plugins into play
+		pluginManager::loadPlugins();
 	}
 
 	public function __destruct(){
@@ -101,13 +104,8 @@ class ircBot{
 	private static function _checkUserPart( $data = '', $username = '' ){
 		if( preg_match( '/\sPART\s#(.*)\s:/i', $data, $channel ) ){
 			$channel = $channel[ 1 ];
-			$data = array(
-				'username' => $username,
-				'channel' => $channel,
-				'time' => time()
-			);
 
-			pluginManager::doAction( 'user-part', $data );
+			pluginManager::doAction( 'user-part', $username, $channel );
 		}
 		return false;
 	}
@@ -116,13 +114,7 @@ class ircBot{
 		if( preg_match( '/\sJOIN\s#(.*)/i', $data, $channel ) ){
 			$channel = $channel[ 1 ];
 
-			$data = array(
-				'username' => $username,
-				'channel' => $channel,
-				'time' => time()
-			);
-
-			pluginManager::doAction( 'user-join', $data );
+			pluginManager::doAction( 'user-join', $username, $channel );
 
 			return true;
 		}
@@ -165,18 +157,10 @@ class ircBot{
 			if( substr( $channel, 0, 1 ) !== '#' && $username === Config::$ircNick )
 				$privateMessage = true;
 
-			// now we need to pass this data to the callback functions that need it
-			$data = array(
-				'username' => $username,
-				'channel' => $channel,
-				'message' => $message,
-				'time' => time()
-			);
-
 			if( $privateMessage )
-				pluginManager::doAction( 'private-message', $data );
+				pluginManager::doAction( 'private-message', $username, $channel, $message );
 			else
-				pluginManager::doAction( 'channel-message', $data );
+				pluginManager::doAction( 'channel-message', $username, $channel, $message );
 
 			return true;
 		}

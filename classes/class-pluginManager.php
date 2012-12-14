@@ -54,7 +54,7 @@ class pluginManager{
 				continue;
 
 			// expect a class file to exist in the format "class-<DirectoryName>.php"
-			$classFile = $directory . $dir . '/class-' . $dir . '.php';
+			$classFile = $directory . $dir . '/' . $dir . '.php';
 			if( !file_exists( $classFile ) )
 				continue;
 
