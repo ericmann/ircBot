@@ -8,4 +8,4 @@
 
 require_once( __DIR__ . '/classes/class-ircBot.php' );
 
-ircBot::getInstance()->connect();
+ircBot::connect();

@@ -12,13 +12,19 @@ class ircBot{
 	public static $channels = array( '#team10up-dev' );
 	public static $server = 'irc.freenode.net';
 	public static $port = 6667;
-	public static $nick = 'cb-ircBOT';
+	public static $nick = 't10ircBOT';
 
 	private static $_socket = false;
 
 	public function __construct(){
 		// tell PHP to ignore timing this script out
 		set_time_limit( 0 );
+	}
+
+	public function __destruct(){
+		if( self::$_socket ){
+			fclose( self::$_socket );
+		}
 	}
 
 	public static function getInstance(){
@@ -28,7 +34,7 @@ class ircBot{
 		return self::$_instance;
 	}
 
-	public function connect(){
+	public static function connect(){
 		// open the socket to the IRC server
 		self::$_socket = fsockopen( gethostbyname( self::$server ), self::$port, $error_number, $error_string, -1 );
 
@@ -49,10 +55,101 @@ class ircBot{
 	}
 
 	private static function _listen(){
-		// listen to all commands & messages sent to the bot
+		// listen to all commands & messages sent to the bot, reading 128 bits at a time
 		while( $data = fgets( self::$_socket, 128 ) ){
+			// handle & process this command if needed
 			echo $data;
+			self::_processIRCMessage( $data );
 		}
+	}
+
+	private static function _processIRCMessage( $data = '' ){
+		// first off, grab the user name from the message
+		$username = self::_extractIRCUsername( $data );
+
+		// start checking the types of messages that can occur and what we really care about
+		// i imagine that this will grow in the future, but for now - we are simply implementing as we go
+		if( self::_checkChannelMessage( $data, $username ) )
+			return;
+		else if( self::_checkUserPart( $data, $username ) )
+			return;
+		else if( self::_checkUserJoin( $data, $username ) )
+			return;
+	}
+
+	private static function _checkUserPart( $data = '', $username = '' ){
+		if( preg_match( '/\sPART\s#(.*)\s:/i', $data, $channel ) ){
+			$channel = $channel[ 1 ];
+			$data = array(
+				'type' => 'part',
+				'username' => $username,
+				'channel' => $channel,
+				'time' => time()
+			);
+		}
+		return false;
+	}
+
+	private static function _checkUserJoin( $data = '', $username = '' ){
+		if( preg_match( '/\sJOIN\s#(.*)/i', $data, $channel ) ){
+			$channel = $channel[ 1 ];
+
+			$data = array(
+				'type' => 'join',
+				'username' => $username,
+				'channel' => $channel,
+				'time' => time()
+			);
+
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Determines the username.
+	 *
+	 * @param string $data The raw IRC message received.
+	 * @return bool|string Returns the username if found, otherwise false.
+	 */
+	private static function _extractIRCUsername( $data = '' ){
+		preg_match( '/:(.*)\!/i', $data, $username );
+
+		// check for the username now
+		if( count( $username ) === 2 )
+			$username = $username[ 1 ];
+		else
+			$username = false;
+
+		return $username;
+	}
+
+	private static function _checkChannelMessage( $data = '', $username = '' ){
+		// check for a channel message - PRIVMSG
+		if( preg_match( '/\sPRIVMSG\s(.*)\s:(.*)+/i', $data, $channel ) === 1 ){
+			$channel = $channel[ 1 ];
+			preg_match( '/' . $channel . '\s:(.*+)/i', $data, $message );
+			$message = $message[ 1 ];
+
+			// check to see if this is a private message or not
+			$privateMessage = false;
+			if( substr( $channel, 0, 1 ) !== '#' )
+				$privateMessage = true;
+
+			// now we need to pass this data to the callback functions that need it
+			$data = array(
+				'type' => ( $privateMessage ) ? 'private-message' : 'channel-message',
+				'username' => $username,
+				'channel' => $channel,
+				'message' => $message,
+				'time' => time()
+			);
+			var_dump( $data );
+			return true;
+		}
+
+		return false;
 	}
 
 	private static function _joinChannels(){
@@ -67,6 +164,5 @@ class ircBot{
 		fputs( self::$_socket, 'USER ' . self::$nick . ' carldanley.com ' . self::$server . ' ircBot' . "\n" );
 		fputs( self::$_socket, 'NICK ' . self::$nick . "\n" );
 	}
-}
 
 }
