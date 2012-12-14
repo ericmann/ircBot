@@ -22,12 +22,18 @@ class ircBot{
 	private static $_socket = false;
 
 	public function __construct(){
-		// tell PHP to ignore timing this script out
+		// setup PHP settings for not expiring this script
 		set_time_limit( 0 );
 
 		// we should load in the database here so that all plugins have access to it
 
 		// after the database is loaded, load all plugins so that we can begin our callbacks, etc.
+		pluginManager::loadPlugins();
+		$test = 'hello world';
+		$test = pluginManager::applyFliter( 'plugins-loaded', $test );
+		echo '$test =  ', $test, "\n";
+
+		exit;
 	}
 
 	public function __destruct(){
@@ -44,6 +50,9 @@ class ircBot{
 	}
 
 	public static function connect(){
+		// make sure this class has been instantiated
+		self::getInstance();
+
 		// open the socket to the IRC server
 		self::$_socket = fsockopen( gethostbyname( self::$server ), self::$port, $error_number, $error_string, -1 );
 
