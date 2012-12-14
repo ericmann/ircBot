@@ -35,10 +35,10 @@
         <option value="$PROJECT_DIR$/classes/class-ircBotPlugin.php" />
         <option value="$PROJECT_DIR$/plugins/sample/class-sample.php" />
         <option value="$PROJECT_DIR$/classes/class-pluginManager.php" />
-        <option value="$PROJECT_DIR$/classes/class-config.php" />
         <option value="$PROJECT_DIR$/classes/class-database.php" />
         <option value="$PROJECT_DIR$/classes/class-config-sample.php" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/classes/class-config.php" />
         <option value="$PROJECT_DIR$/classes/class-ircBot.php" />
       </list>
     </option>
@@ -250,15 +250,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/classes/class-pluginManager.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="74" column="36" selection-start="1982" selection-end="1982" vertical-scroll-proportion="1.9096774">
-          <folding>
-            <element signature="e#6#120#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/classes/class-database.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="10" column="30" selection-start="161" selection-end="161" vertical-scroll-proportion="0.2580645">
@@ -282,9 +273,25 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/classes/class-pluginManager.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="111" column="49" selection-start="3093" selection-end="3093" vertical-scroll-proportion="-0.28387097">
+          <folding>
+            <element signature="e#6#120#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/classes/class-config.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="54" selection-start="181" selection-end="181" vertical-scroll-proportion="0.23225807">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/classes/class-ircBot.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="53" selection-start="230" selection-end="230" vertical-scroll-proportion="0.18064517">
+        <state line="78" column="64" selection-start="2229" selection-end="2229" vertical-scroll-proportion="0.9483871">
           <folding>
             <element signature="e#6#114#0" expanded="true" />
           </folding>

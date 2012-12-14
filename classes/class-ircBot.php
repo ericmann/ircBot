@@ -7,7 +7,7 @@
  */
 
 // require our singletons for plugins and the database stuff
-require_once( __DIR__ . '/class-config-sample.php' );
+require_once( __DIR__ . '/class-config.php' );
 require_once( __DIR__ . '/class-database.php' );
 require_once( __DIR__ . '/class-pluginManager.php' );
 
@@ -62,6 +62,7 @@ class ircBot{
 		// listen to all commands & messages sent to the bot, reading 128 bits at a time
 		while( $data = fgets( self::$_socket, 128 ) ){
 			// handle & process this command if needed
+			echo $data;
 			self::_processIRCMessage( $data );
 		}
 	}
@@ -74,12 +75,18 @@ class ircBot{
 		// i imagine that this will grow in the future, but for now - we are simply implementing as we go
 		if( self::_checkPingPong( $data ) )
 			return;
+		else if( self::_checkUserNameTaken( $data ) )
+			die( 'Username "' . Config::$ircNick . '" already taken on ' . Config::$ircServer . "\n" );
 		else if( self::_checkChannelMessage( $data, $username ) )
 			return;
 		else if( self::_checkUserPart( $data, $username ) )
 			return;
 		else if( self::_checkUserJoin( $data, $username ) )
 			return;
+	}
+
+	private static function _checkUserNameTaken( $data = '' ){
+		return preg_match( '/Nickname is already in use./i', $data );
 	}
 
 	private static function _checkPingPong( $data = '' ){
