@@ -69,12 +69,23 @@ class ircBot{
 
 		// start checking the types of messages that can occur and what we really care about
 		// i imagine that this will grow in the future, but for now - we are simply implementing as we go
-		if( self::_checkChannelMessage( $data, $username ) )
+		if( self::_checkPingPong( $data ) )
+			return;
+		else if( self::_checkChannelMessage( $data, $username ) )
 			return;
 		else if( self::_checkUserPart( $data, $username ) )
 			return;
 		else if( self::_checkUserJoin( $data, $username ) )
 			return;
+	}
+
+	private static function _checkPingPong( $data = '' ){
+		if( preg_match( '/^PING\s/i', $data ) ){
+			$data = str_replace( 'PING ', 'PONG ', $data ) . "\n";
+			fputs( self::$_socket, $data );
+			return true;
+		}
+		return false;
 	}
 
 	private static function _checkUserPart( $data = '', $username = '' ){
@@ -114,7 +125,7 @@ class ircBot{
 	 * @return bool|string Returns the username if found, otherwise false.
 	 */
 	private static function _extractIRCUsername( $data = '' ){
-		preg_match( '/:(.*)\!/i', $data, $username );
+		preg_match( '/:([^!]+)!/i', $data, $username );
 
 		// check for the username now
 		if( count( $username ) === 2 )
@@ -132,6 +143,10 @@ class ircBot{
 			preg_match( '/' . $channel . '\s:(.*+)/i', $data, $message );
 			$message = $message[ 1 ];
 
+			// strip the bad characters in the message
+			$message = str_replace( "\r", '', $message );
+			$message = str_replace( "\n", '', $message );
+
 			// check to see if this is a private message or not
 			$privateMessage = false;
 			if( substr( $channel, 0, 1 ) !== '#' )
@@ -145,11 +160,16 @@ class ircBot{
 				'message' => $message,
 				'time' => time()
 			);
-			var_dump( $data );
+
 			return true;
 		}
 
 		return false;
+	}
+
+	public static function sendChannelMessage( $channel = '', $message = '' ){
+		$data = 'PRIVMSG ' . $channel . ' :' . $message . "\n";
+		fputs( self::$_socket, $data );
 	}
 
 	private static function _joinChannels(){
