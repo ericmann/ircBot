@@ -24,16 +24,6 @@ class ircBot{
 	public function __construct(){
 		// setup PHP settings for not expiring this script
 		set_time_limit( 0 );
-
-		// we should load in the database here so that all plugins have access to it
-
-		// after the database is loaded, load all plugins so that we can begin our callbacks, etc.
-		pluginManager::loadPlugins();
-		$test = 'hello world';
-		$test = pluginManager::applyFliter( 'plugins-loaded', $test );
-		echo '$test =  ', $test, "\n";
-
-		exit;
 	}
 
 	public function __destruct(){
