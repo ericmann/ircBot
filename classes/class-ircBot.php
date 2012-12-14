@@ -7,17 +7,13 @@
  */
 
 // require our singletons for plugins and the database stuff
+require_once( __DIR__ . '/class-config.php' );
 require_once( __DIR__ . '/class-database.php' );
 require_once( __DIR__ . '/class-pluginManager.php' );
 
 class ircBot{
 
 	private static $_instance = false;
-
-	public static $channels = array( '#team10up-dev' );
-	public static $server = 'irc.freenode.net';
-	public static $port = 6667;
-	public static $nick = 't10ircBOT';
 
 	private static $_socket = false;
 
@@ -44,11 +40,11 @@ class ircBot{
 		self::getInstance();
 
 		// open the socket to the IRC server
-		self::$_socket = fsockopen( gethostbyname( self::$server ), self::$port, $error_number, $error_string, -1 );
+		self::$_socket = fsockopen( gethostbyname( Config::$ircServer ), Config::$ircPort, $error_number, $error_string, -1 );
 
 		// check that we actually joined
 		if( !self::$_socket )
-			die( 'Error while connecting to ' . self::$server . ': [' . $error_number . ']: ' . $error_string );
+			die( 'Error while connecting to ' . Config::$ircServer . ': [' . $error_number . ']: ' . $error_string );
 
 		self::_login();
 		self::_joinChannels();
@@ -66,7 +62,6 @@ class ircBot{
 		// listen to all commands & messages sent to the bot, reading 128 bits at a time
 		while( $data = fgets( self::$_socket, 128 ) ){
 			// handle & process this command if needed
-			echo $data;
 			self::_processIRCMessage( $data );
 		}
 	}
@@ -157,9 +152,10 @@ class ircBot{
 			$message = str_replace( "\r", '', $message );
 			$message = str_replace( "\n", '', $message );
 
-			// check to see if this is a private message or not
+			// check to see if this is a private message or not - we know it's private because there will be no hash tag
+			// and the channel will match the username
 			$privateMessage = false;
-			if( substr( $channel, 0, 1 ) !== '#' )
+			if( substr( $channel, 0, 1 ) !== '#' && $username === Config::$ircNick )
 				$privateMessage = true;
 
 			// now we need to pass this data to the callback functions that need it
@@ -188,15 +184,15 @@ class ircBot{
 
 	private static function _joinChannels(){
 		// Join all specified channels
-		foreach( self::$channels as $channel ){
+		foreach( Config::$ircChannels as $channel ){
 			fputs( self::$_socket, 'JOIN ' . $channel . "\n" );
 		}
 	}
 
 	private static function _login(){
 		// login to the IRC server
-		fputs( self::$_socket, 'USER ' . self::$nick . ' carldanley.com ' . self::$server . ' ircBot' . "\n" );
-		fputs( self::$_socket, 'NICK ' . self::$nick . "\n" );
+		fputs( self::$_socket, 'USER ' . Config::$ircNick . ' ' . Config::$ircServiceName . ' ' . Config::$ircServer . ' ircBot' . "\n" );
+		fputs( self::$_socket, 'NICK ' . Config::$ircNick . "\n" );
 	}
 
 }

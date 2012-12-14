@@ -20,13 +20,11 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="class-ircBot.php" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/classes/class-ircBot.php">
+      <file leaf-file-name="class-config.php" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/classes/class-config.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="53" selection-start="279" selection-end="279" vertical-scroll-proportion="0.2580645">
-              <folding>
-                <element signature="e#6#114#0" expanded="true" />
-              </folding>
+            <state line="9" column="54" selection-start="181" selection-end="181" vertical-scroll-proportion="0.23225807">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -45,10 +43,11 @@
         <option value="$PROJECT_DIR$/index.php" />
         <option value="$PROJECT_DIR$/classes/class-plugin.php" />
         <option value="$PROJECT_DIR$/classes/class-ircBotPlugin.php" />
-        <option value="$PROJECT_DIR$/classes/class-pluginManager.php" />
         <option value="$PROJECT_DIR$/plugins/sample/class-sample.php" />
-        <option value="$PROJECT_DIR$/classes/class-database.php" />
         <option value="$PROJECT_DIR$/classes/class-ircBot.php" />
+        <option value="$PROJECT_DIR$/classes/class-pluginManager.php" />
+        <option value="$PROJECT_DIR$/classes/class-config.php" />
+        <option value="$PROJECT_DIR$/classes/class-database.php" />
       </list>
     </option>
   </component>
@@ -99,6 +98,20 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="ircBot" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="daemon" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ircBot" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="classes" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -245,28 +258,37 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/classes/class-ircBot.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="0" selection-start="327" selection-end="327" vertical-scroll-proportion="0.30967742">
+          <folding>
+            <element signature="e#6#114#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/classes/class-pluginManager.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="23" selection-start="99" selection-end="99" vertical-scroll-proportion="0.103225805">
-          <folding />
+        <state line="74" column="36" selection-start="1982" selection-end="1982" vertical-scroll-proportion="1.9096774">
+          <folding>
+            <element signature="e#6#120#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/classes/class-database.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="0" selection-start="133" selection-end="133" vertical-scroll-proportion="-0.051612902">
+        <state line="10" column="30" selection-start="161" selection-end="161" vertical-scroll-proportion="0.2580645">
           <folding>
             <element signature="e#6#115#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/classes/class-ircBot.php">
+    <entry file="file://$PROJECT_DIR$/classes/class-config.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="53" selection-start="279" selection-end="279" vertical-scroll-proportion="0.2580645">
-          <folding>
-            <element signature="e#6#114#0" expanded="true" />
-          </folding>
+        <state line="9" column="54" selection-start="181" selection-end="181" vertical-scroll-proportion="0.23225807">
+          <folding />
         </state>
       </provider>
     </entry>

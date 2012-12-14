@@ -13,13 +13,6 @@ class pluginManager{
 	private static $_filters = array();
 	private static $_instance = false;
 
-	/**
-	 * Relative to where this pluginManager file is actually included
-	 *
-	 * @var string
-	 */
-	private static $_pluginsDirectory = '/../plugins/';
-
 	public function __construct(){
 		//
 	}
@@ -44,7 +37,7 @@ class pluginManager{
 
 	protected static function _scanForPlugins(){
 		// open a handle to the directory filesystem
-		$directory = __DIR__ . self::$_pluginsDirectory;
+		$directory = __DIR__ . Config::$pluginsDirectory;
 		$handle = opendir( $directory );
 
 		// check to make sure we could open the directory handle
@@ -78,7 +71,7 @@ class pluginManager{
 	}
 
 	protected static function _pluginsDirectoryExists(){
-		$directory = __DIR__ . self::$_pluginsDirectory;
+		$directory = __DIR__ . Config::$pluginsDirectory;
 		return is_dir( $directory );
 	}
 

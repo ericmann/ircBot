@@ -9,10 +9,6 @@
 class Database{
 
 	private static $_instance;
-	private static $_db_host = 'localhost';
-	private static $_db_user = 'root';
-	private static $_db_pass = 'TtIeIMUL4368!';
-	private static $_db_name = 'address_verified';
 	private static $_mysql = false;
 	private static $_query = '';
 	private static $_query_type = '';
@@ -35,7 +31,7 @@ class Database{
 
 	public static function connect(){
 		self::disconnect();
-		self::$_mysql = new mysqli( self::$_db_host, self::$_db_user, self::$_db_pass, self::$_db_name );
+		self::$_mysql = new mysqli( Config::$dbHost, Config::$dbUsername, Config::$dbPassword, Config::$dbDatabase );
 	}
 
 	public static function disconnect(){
