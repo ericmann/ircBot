@@ -9,6 +9,7 @@ Todo
 * Add cron-based support for plugins that need to register cron jobs with the ircBot. This is actually already integrated into the current private version of the ircBot and is only a simple rewrite/review away from being integrated into this version of the bot.
 * Test the usage of database-driven plugins to ensure that things are working correctly with this. Providing a sample plugin with examples on how the database connections should work would probably be in the best interest of everyone.
 * Incorporate some basic bot commands including !restart, !kill, !join <channel>, !part <channel>, etc.
+* We will need to thoroughly test the !restart command to ensure that it's killing old PHP processes and correctly performing any subversion pulls. Providing multiple OS restart scripts is probably in the best interest of everyone.
 
 Contributing
 ------------
