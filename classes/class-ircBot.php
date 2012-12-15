@@ -64,8 +64,12 @@ class ircBot{
 	private static function _listen(){
 		// listen to all commands & messages sent to the bot, reading 128 bits at a time
 		while( $data = fgets( self::$_socket, 128 ) ){
+
+			// show irc raw output for debugging purposes
+			if( Config::$ircDebug )
+				echo $data;
+
 			// handle & process this command if needed
-			echo $data;
 			self::_processIRCMessage( $data );
 		}
 	}

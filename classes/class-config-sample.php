@@ -12,6 +12,7 @@ class Config{
 	public static $ircPort = 6667;
 	public static $ircNick = 'nick';
 	public static $ircServiceName = 'ircBot-v1.0';
+	public static $ircDebug = false;
 
 	public static $pluginsDirectory = '/../plugins/';
 
