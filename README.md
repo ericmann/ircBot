@@ -10,6 +10,8 @@ Todo
 * Test the usage of database-driven plugins to ensure that things are working correctly with this. Providing a sample plugin with examples on how the database connections should work would probably be in the best interest of everyone.
 * Incorporate some basic bot commands including !restart, !kill, !join <channel>, !part <channel>, etc.
 * We will need to thoroughly test the !restart command to ensure that it's killing old PHP processes and correctly performing any subversion pulls. Providing multiple OS restart scripts is probably in the best interest of everyone.
+* Thorough commenting - have been in a rush to get it up and running.
+* Plugin for WordPress Trac support.
 
 Contributing
 ------------
