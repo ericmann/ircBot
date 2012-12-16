@@ -29,6 +29,8 @@ How to Use
 * `pluginManager::applyFilter()` - applies all filters to specified data
 * `pluginManager::addFilter()` - registers your callback to the filter hooks
 * `pluginManager::removeFilter()` - removes a specified filter
+* `cronSystem::register()` - registers your cron job with the cron system
+* `cronSystem::remove()` - removes the specified cron job if it exists.
 
 
 Contributing
