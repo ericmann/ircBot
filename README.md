@@ -7,7 +7,7 @@ Features
 --------
 
 * A full plugin system that offers an API for registering hooks within the bot. This hook system is basically the same as WordPress. Since the bot originated in my work environment, it was important that we had something for our other developers to easily contribute code to.
-** Support for: ''addAction()'', ''doAction()'', ''removeAction()'', ''applyFilter()'', ''addFilter()', ''removeFilter()''
+** Support for: `addAction()`, `doAction()`, `removeAction()`, `applyFilter()`, `addFilter()`, `removeFilter()`
 * A cron-based task system that allows users to register/remove cron jobs with the bot. This is extremely useful for checking for news or status updates via RSS or APIs, etc. There are many things that we can do with this cron-based task system.
 * A streamlined, completely custom IRC framework for the sole purpose of handling IRC bots. This framework has been written based off of the needs from my original IRC bot. Previously, we used SmartIRC and after rewriting this, we eliminated unnecessary lines of code.
 
