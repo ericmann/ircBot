@@ -22,6 +22,14 @@ Todo
 How to Use
 ----------
 
+1. Clone this repo using `git clone git@github.com:carldanley/ircBot.git`
+1. Setup your class-config.php
+1. Install and/or write your own plugins
+1. Launch the bot by typing `php index.php` from the directory where you cloned the bot.
+
+Functions
+----------
+
 * `ircBot::sendChannelMessage()` - sends a message to the specified channel. ircBot will make sure that it is currently in this channel before trying to send this message.
 * `pluginManager::doAction()` - performs an action hook and passes the specified arguments to all registered hooks.
 * `pluginManager::addAction()` - registers your callback to the action hooks
