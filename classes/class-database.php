@@ -140,9 +140,7 @@ class Database{
 
 		$clause = ' ( ' . implode( ', ', $keys ) . ' ) VALUES ( ' . implode( ', ', $values ) . ' ) ';
 
-		array_walk( self::$_query_data, function( $item ){
-			self::_add_variable_binding( $item );
-		} );
+		array_walk( self::$_query_data, array( self::instance(), 'add_variable_binding' ) );
 
 		self::$_query .= $clause;
 	}
@@ -173,7 +171,7 @@ class Database{
 		self::$_query .= ' WHERE ' . implode( ' AND ', $clauses );
 	}
 
-	private static function _add_variable_binding( $value ){
+	public static function add_variable_binding( $value ){
 		self::$_variable_binds[] = array(
 			'type' => self::_determine_variable_type( $value ),
 			'value' => $value
