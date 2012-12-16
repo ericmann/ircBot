@@ -1,0 +1,2 @@
+# forcing this to not be ignored so the empty directory stays here
+!.gitignore
