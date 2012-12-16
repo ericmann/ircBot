@@ -49,6 +49,6 @@ Contributing
 3. Commit your changes (`git commit -am "Added some sweet stuff"`)
 4. Push to the branch (`git push origin my_branch`)
 5. Open a [Pull Request][1]
-6. Enjoy a refreshing Diet Coke and wait
+6. Enjoy a refreshing Mountain Dew and wait
 
 [1]: http://github.com/github/markup/pulls
