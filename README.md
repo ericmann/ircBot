@@ -51,4 +51,4 @@ Contributing
 5. Open a [Pull Request][1]
 6. Enjoy a refreshing Mountain Dew and wait
 
-[1]: http://github.com/github/markup/pulls
+[1]: https://github.com/carldanley/ircBot/pulls
