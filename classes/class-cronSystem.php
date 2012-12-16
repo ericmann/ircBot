@@ -47,7 +47,14 @@ class cronSystem{
 
 		foreach( $validFormats as $validFormat ){
 			if( !isset( $interval[ $validFormat ] ) ){
-				$new[ $validFormat ] = '*';
+
+				if( $validFormat === 'year' )
+					$new[ $validFormat ] = '*';
+				else if( $validFormat === 'month' || $validFormat === 'day' || $validFormat === 'hour' )
+					$new[ $validFormat ] = '01';
+				else if( $validFormat === 'minute' || $validFormat === 'second' )
+					$new[ $validFormat ] = '00';
+
 				continue;
 			}
 
