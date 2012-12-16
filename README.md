@@ -22,10 +22,7 @@ Todo
 How to Use
 ----------
 
-1. ircBot
 * `ircBot::sendChannelMessage()` - sends a message to the specified channel. ircBot will make sure that it is currently in this channel before trying to send this message.
-
-2. pluginManager
 * `pluginManager::doAction()` - performs an action hook and passes the specified arguments to all registered hooks.
 * `pluginManager::addAction()` - registers your callback to the action hooks
 * `pluginManager::removeAction()` - removes a specified action
