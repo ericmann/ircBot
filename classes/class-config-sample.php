@@ -21,4 +21,6 @@ class Config{
 	public static $dbPassword = 'root';
 	public static $dbDatabase = 'ircBot';
 
+	public static $defaultTimeZone = 'EST';
+
 }

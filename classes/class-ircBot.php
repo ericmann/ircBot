@@ -10,11 +10,11 @@
 require_once( __DIR__ . '/class-config.php' );
 require_once( __DIR__ . '/class-database.php' );
 require_once( __DIR__ . '/class-pluginManager.php' );
+require_once( __DIR__ . '/class-cronSystem.php' );
 
 class ircBot{
 
 	private static $_instance = false;
-
 	private static $_socket = false;
 
 	public function __construct(){
@@ -27,7 +27,7 @@ class ircBot{
 
 	public function __destruct(){
 		if( self::$_socket ){
-			fclose( self::$_socket );
+			socket_close( self::$_socket );
 		}
 	}
 
@@ -43,18 +43,29 @@ class ircBot{
 		self::getInstance();
 
 		// open the socket to the IRC server
-		self::$_socket = fsockopen( gethostbyname( Config::$ircServer ), Config::$ircPort, $error_number, $error_string, -1 );
+		//self::$_socket = fsockopen( gethostbyname( Config::$ircServer ), Config::$ircPort, $error_number, $error_string, -1 );
+		self::$_socket = socket_create( AF_INET, SOCK_STREAM, 0 );
+		$socketConnection = socket_connect( self::$_socket, Config::$ircServer, Config::$ircPort );
 
 		// check that we actually joined
-		if( !self::$_socket )
-			die( 'Error while connecting to ' . Config::$ircServer . ': [' . $error_number . ']: ' . $error_string );
+		if( !self::$_socket || !$socketConnection )
+			die( 'Error while connecting to ' . Config::$ircServer );
 
+		// set nonblocking
+		socket_set_nonblock( self::$_socket );
+
+		// now actually login to the server and join the channels we need
 		self::_login();
 		self::_joinChannels();
 
 		// listen for any commands now until this script is closed manually through kill command or user interaction
 		while( 1 ){
+
+			// listen for any incoming commands
 			self::_listen();
+
+			// check for cron jobs that might need to be run
+			cronSystem::checkJobs();
 		}
 
 		// close the socket to the IRC server
@@ -62,8 +73,15 @@ class ircBot{
 	}
 
 	private static function _listen(){
-		// listen to all commands & messages sent to the bot, reading 128 bits at a time
-		while( $data = fgets( self::$_socket, 128 ) ){
+		// timeout: 1 second = 1000000
+		$timeout = 1000000;
+
+		// listen to all commands & messages sent to the bot
+		$sockets = array( self::$_socket );
+		$socketUpdated = socket_select( $sockets, $write = array(), $exception = array(), 0, $timeout );
+
+		if( $socketUpdated === 1 ){
+			$data = socket_read( self::$_socket, 1024 );
 
 			// show irc raw output for debugging purposes
 			if( Config::$ircDebug )
@@ -99,7 +117,7 @@ class ircBot{
 	private static function _checkPingPong( $data = '' ){
 		if( preg_match( '/^PING\s/i', $data ) ){
 			$data = str_replace( 'PING ', 'PONG ', $data ) . "\n";
-			fputs( self::$_socket, $data );
+			socket_write( self::$_socket, $data );
 			return true;
 		}
 		return false;
@@ -173,21 +191,20 @@ class ircBot{
 	}
 
 	public static function sendChannelMessage( $channel = '', $message = '' ){
-		$data = 'PRIVMSG ' . $channel . ' :' . $message . "\n";
-		fputs( self::$_socket, $data );
+		socket_write( self::$_socket, 'PRIVMSG ' . $channel . ' :' . $message . "\n" );
 	}
 
 	private static function _joinChannels(){
 		// Join all specified channels
 		foreach( Config::$ircChannels as $channel ){
-			fputs( self::$_socket, 'JOIN ' . $channel . "\n" );
+			socket_write( self::$_socket, 'JOIN ' . $channel . "\n" );
 		}
 	}
 
 	private static function _login(){
 		// login to the IRC server
-		fputs( self::$_socket, 'USER ' . Config::$ircNick . ' ' . Config::$ircServiceName . ' ' . Config::$ircServer . ' ircBot' . "\n" );
-		fputs( self::$_socket, 'NICK ' . Config::$ircNick . "\n" );
+		socket_write( self::$_socket, 'USER ' . Config::$ircNick . ' ' . Config::$ircServiceName . ' ' . Config::$ircServer . ' ircBot' . "\n" );
+		socket_write( self::$_socket, 'NICK ' . Config::$ircNick . "\n" );
 	}
 
 }
