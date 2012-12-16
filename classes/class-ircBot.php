@@ -17,12 +17,36 @@ class ircBot{
 	private static $_instance = false;
 	private static $_socket = false;
 
+	// this needs to be updated when the bot joins/parts channels or even gets kicked from a channel
+	private static $_channelsConnectedTo = array();
+
 	public function __construct(){
 		// setup PHP settings for not expiring this script
 		set_time_limit( 0 );
 
 		// load all plugins into play
 		pluginManager::loadPlugins();
+
+		// add support for user-joined
+		pluginManager::addAction( 'user-join', array( $this, 'checkForNewChannel' ) );
+	}
+
+	public function checkForNewChannel( $username = '', $channel = '' ){
+		if( !$username === Config::$ircNick )
+			return;
+
+		if( in_array( $channel, self::$_channelsConnectedTo ) )
+			return;
+
+		self::$_channelsConnectedTo[] = $channel;
+	}
+
+	public static function sanitizeString( $str = '' ){
+		$str = str_replace( "\n", '', $str );
+		$str = str_replace( "\r", '', $str );
+		$str = str_replace( "\t", '', $str );
+
+		return $str;
 	}
 
 	public function __destruct(){
@@ -87,12 +111,18 @@ class ircBot{
 			if( Config::$ircDebug )
 				echo $data;
 
+			// split by newlines and process each one
+			$lines = explode( "\n", $data );
+
 			// handle & process this command if needed
-			self::_processIRCMessage( $data );
+			array_walk( $lines, array( self::getInstance(), 'processIRCMessage' ) );
 		}
 	}
 
-	private static function _processIRCMessage( $data = '' ){
+	public static function processIRCMessage( $data = '' ){
+		// sanitize this data
+		$data = self::sanitizeString( $data );
+
 		// first off, grab the user name from the message
 		$username = self::_extractIRCUsername( $data );
 
@@ -134,7 +164,7 @@ class ircBot{
 
 	private static function _checkUserJoin( $data = '', $username = '' ){
 		if( preg_match( '/\sJOIN\s#(.*)/i', $data, $channel ) ){
-			$channel = $channel[ 1 ];
+			$channel = self::sanitizeString( $channel[ 1 ] );
 
 			pluginManager::doAction( 'user-join', $username, $channel );
 
@@ -191,6 +221,17 @@ class ircBot{
 	}
 
 	public static function sendChannelMessage( $channel = '', $message = '' ){
+		// strip the hash if it exists
+		$channel = str_replace( '#', '', $channel );
+
+		// make sure the bot is connected to this channel before we try sending this message
+		if( !in_array( $channel, self::$_channelsConnectedTo ) )
+			return;
+
+		// now add the slash back
+		$channel = '#' . $channel;
+
+		// write to the socket now
 		socket_write( self::$_socket, 'PRIVMSG ' . $channel . ' :' . $message . "\n" );
 	}
 
