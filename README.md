@@ -31,6 +31,14 @@ How to Use
 * `pluginManager::removeFilter()` - removes a specified filter
 * `cronSystem::register()` - registers your cron job with the cron system
 * `cronSystem::remove()` - removes the specified cron job if it exists.
+* `Database::connect()` - connects to the MySQL server using the settings in your config file.
+* `Database::disconnect()` - disconnects from the MySQL server if it was previously connected
+* `Database::query()` - performs a manual query and returns the results.
+* `Database::get()` - gets data from a table
+* `Database::delete()` - deletes data from a table
+* `Database::insert()` - inserts the specified data into the table
+* `Database::update()` - updates data in the specified table with the new data passed
+* `Database::where()` - handles adding a where clause to each MySQL query
 
 
 Contributing
