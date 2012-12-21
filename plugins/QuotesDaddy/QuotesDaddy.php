@@ -1,11 +1,11 @@
 <?php
 /**
- * Original Filename: QuotesDaddyPlugin.php
+ * Original Filename: QuotesDaddy.php
  * User: ericmann
  * Created on: 12/21/12
  * Time: 8:26 AM
  */
-class SamplePlugin{
+class QuotesDaddy {
 
 	public function __construct(){
 		pluginManager::addAction( 'channel-message', array( $this, 'checkCommands' ) );
