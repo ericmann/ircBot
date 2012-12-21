@@ -153,7 +153,12 @@ class ircBot{
 
 		// listen to all commands & messages sent to the bot
 		$sockets = array( self::$_socket );
-		$socketUpdated = socket_select( $sockets, $write = array(), $exception = array(), 0, $timeout );
+
+		// Set defaults
+		$write = isset( $write ) ? $write : array();
+		$exception = isset( $exception ) ? $exception : array();
+
+		$socketUpdated = socket_select( $sockets, $write, $exception, 0, $timeout );
 
 		if( $socketUpdated === 1 ){
 			$data = socket_read( self::$_socket, 1024 );
