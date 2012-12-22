@@ -122,7 +122,7 @@ class pluginManager{
 		unset( self::$_actions[ $action ] );
 	}
 
-	public static function applyFliter( $filter = '', $data = '' ){
+	public static function applyFilter( $filter = '', $data = '' ){
 		if( !isset( self::$_filters[ $filter ] ) )
 			return $data;
 
